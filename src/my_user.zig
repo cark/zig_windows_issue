@@ -16,14 +16,25 @@ test "sum1" { // this works fine
     try expect(result.value == 25);
 }
 
-test "sum2" {  
-// .\src\my_user.zig:27:28: error: expected type 'src.my_type.MyType', found 'src.my_type.MyType'
+test "sum2" { // this works fine
+    const  mt31 = MyType3{.value = 12};
+    try expect(mt31.value == 12);
+
+    const mt32 = MyType3{.value  = 13};
+    try expect(mt32.value == 13);
+
+    const result = mt31.sum(mt32);
+    try expect(result.value == 25);
+}
+
+test "sum3" {  // this errors out
     const  mt1 = MyType1{.value = 12};
     try expect(mt1.value == 12);
 
     const mt3 = MyType3{.value  = 13};
     try expect(mt3.value == 13);
 
+    // .\src\my_user.zig:27:28: error: expected type 'src.my_type.MyType', found 'src.my_type.MyType'
     const result = mt1.sum(mt3);
     try expect(result.value == 25);
 }
